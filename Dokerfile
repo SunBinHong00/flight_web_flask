@@ -12,3 +12,5 @@ EXPOSE 8080
 
 # ENTRYPOINT 컨테이너 실행 시 마다
 ENTRYPOINT ["python", "app.py"]
+
+# docker run -e SSL_KEY=SSL_KEY -e SSL_CRT=SSL_CRT -p 8080:8080 flight_web:lastest

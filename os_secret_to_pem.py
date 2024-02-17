@@ -1,5 +1,10 @@
 import os
 
+path = "./ssl"
+
+if not os.path.exists(path):
+    os.makedirs(path)
+
 key = os.environ["SSL_KEY"]
 crt = os.environ["SSL_CRT"]
 
