@@ -1,16 +1,24 @@
+# 기본으로 사용할 특정 Python 슬림 이미지
 FROM python:3.8.10-slim
 
-# . 현재 디렉토리의 파일을 /app에 추가
-COPY . /app
+# 작업 디렉토리를 /app으로 설정
 WORKDIR /app
 
-# 컨테이너를 생성할 때
+# Docker의 캐시를 효율적으로 사용하기 위해 초기에 requirements.txt만 복사
+COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 8080번 포트
+# 이제 애플리케이션의 나머지 소스 코드를 컨테이너에 복사
+COPY . .
+
+# entrypoint 스크립트가 실행 가능하도록 설정
+RUN chmod +x entrypoint.sh
+
+# 호스트에 8080 포트를 노출
 EXPOSE 8080
 
-# ENTRYPOINT 컨테이너 실행 시 마다
-ENTRYPOINT ["python", "app.py"]
+# 컨테이너의 엔트리포인트 스크립트를 지정
+ENTRYPOINT ["./entrypoint.sh"]
 
-# docker run -e SSL_KEY=SSL_KEY -e SSL_CRT=SSL_CRT -p 8080:8080 flight_web:lastest
+
+# docker run -e SSL_KEY=SSL_KEY -e SSL_CRT=SSL_CRT -p 8080:8080 flight_web:latest
