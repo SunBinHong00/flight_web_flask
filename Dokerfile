@@ -1,0 +1,14 @@
+FROM python:3.8.10-slim
+
+# . 현재 디렉토리의 파일을 /app에 추가
+COPY . /app
+WORKDIR /app
+
+# 컨테이너를 생성할 때
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 8080번 포트
+EXPOSE 8080
+
+# ENTRYPOINT 컨테이너 실행 시 마다
+ENTRYPOINT ["python", "app.py"]
